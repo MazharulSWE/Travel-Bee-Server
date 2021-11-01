@@ -159,6 +159,13 @@ async function run(){
         console.log(result);
         res.json(result);
     });
+     //Find all order
+     app.get('/order', async(req,res)=>{
+        const query = {};
+        const cursor = allOrders.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+    });
 
     // GET SINGLE SERVICE
     app.get('/services/:id', async(req,res)=>{
@@ -168,6 +175,8 @@ async function run(){
         const service = await servicesCollection.findOne(query);
         res.json(service);
     })
+
+   
 
     //  POST API
     app.post('/services', async(req,res)=>{
