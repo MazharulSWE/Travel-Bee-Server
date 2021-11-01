@@ -24,7 +24,7 @@
 //     //    console.log('connected to database');  // if this is connected then you can see in CMD that means it's connected to mongo server
 //     const database = client.db('travelBee');
 //     const servicesCollection= database.collection('services');
-//     const allOrders = database.collection('allOrders');
+    // const allOrders = database.collection('allOrders');
 //     // console.log(allOrders);
 
     
@@ -139,12 +139,25 @@ async function run(){
     //    console.log('connected to database');  // if this is connected then you can see in CMD that means it's connected to mongo server
     const database = client.db('travelBee');
     const servicesCollection= database.collection('services');
+    const allOrders = database.collection('allOrders');
+
 
     // GET API 
     app.get('/services', async(req,res)=>{
         const cursor = servicesCollection.find({});
         const services = await cursor.toArray();
         res.send(services);
+    });
+
+    //  POST API
+    app.post('/allOrders', async(req,res)=>{
+        const service = req.body;
+        // console.log('hit the post api',service);
+        const query = {service}; // n
+        const result = await allOrders.insertOne(query); //n
+        // const result = await servicesCollection.insertOne(service);  // uncomment
+        console.log(result);
+        res.json(result);
     });
 
     // GET SINGLE SERVICE
